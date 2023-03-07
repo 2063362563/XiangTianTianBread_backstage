@@ -26,7 +26,7 @@ public class Good implements Serializable {
     /**
      * 商品名字
      */
-    private String name;
+    private String goodName;
 
     /**
      * 商品种类(0代表面包，1代表蛋糕)

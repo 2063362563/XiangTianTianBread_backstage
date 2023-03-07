@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fan.xiangtiantianbread.pojo.Employee;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -29,5 +30,10 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
     @Select("SELECT COUNT(id) FROM employee")
     Integer getEmployeeTotal();
 
+    /**
+     *退出登录时,设置上次登录日期为当前时间
+     */
+    @Update("UPDATE employee SET last_logintime = CURDATE() WHERE id = #{employee}")
+    Boolean setLastLonginDate(Integer employeeId);
 
 }

@@ -32,6 +32,11 @@ public class Employee implements Serializable {
     private String name;
 
     /**
+     * 员工头像
+     */
+    private String icon;
+
+    /**
      * 职位
      */
     private Integer post;

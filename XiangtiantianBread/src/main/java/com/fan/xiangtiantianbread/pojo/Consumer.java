@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -51,7 +52,7 @@ public class Consumer implements Serializable {
     /**
      * 最后一次消费时间
      */
-//    private Date lastLogintime;
+    private Date lastLogintime;
 
     /**
      * 生日
@@ -62,6 +63,16 @@ public class Consumer implements Serializable {
      * 电话号码
      */
     private String tel;
+
+    /**
+     * 累计会员积分,每消费一元累计一分
+     */
+    private BigDecimal totalIntegral;
+
+    /**
+     * 当前会员积分,每消费一元累计一分
+     */
+    private BigDecimal nowIntegral;
 
     public Consumer() {}
 }
