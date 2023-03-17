@@ -2,8 +2,6 @@ package com.fan.xiangtiantianbread.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fan.xiangtiantianbread.pojo.Good;
-import com.fan.xiangtiantianbread.pojo.GoodAndNum;
-import com.fan.xiangtiantianbread.pojo.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -16,6 +14,15 @@ public interface GoodMapper extends BaseMapper<Good> {
     /**
      * 返回今日商品销售排行
      */
-    @Select("SELECT good_id,sum(good_num) from orders_good where order_id IN (SELECT id from orders where data = CURRENT_DATE) GROUP BY good_id ORDER BY SUM(good_num) DESC")
-    List<GoodAndNum> getTodaySaleGood();
+    @Select("SELECT good_name as goods,sum(good_num) as number \n" +
+            "from orders_good \n" +
+            "LEFT JOIN good on good.id = orders_good.good_id \n" +
+            "where order_id IN (SELECT id from orders where date > CURRENT_DATE) \n" +
+            "GROUP BY good_id \n" +
+            "ORDER BY SUM(good_num) DESC\n" +
+            "limit ${(page-1)*8},8")
+    List<Map<String,Object>> getTodaySaleGood(Integer page);
+
+    @Select("SELECT COUNT(good_id) as total from orders_good where order_id in (select id from orders where date > CURRENT_DATE)")
+    Integer getTodaySaleGoodTotal();
 }

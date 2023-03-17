@@ -32,16 +32,17 @@ public class GoodController {
     }
 
     /**
-     * 获取今日商品贩卖情况
+     * 获取今日商品贩卖情况,逆序返回商品ID和今日贩卖数量
      * @return
      */
-    @GetMapping
-    public Result getTodaySaleGood(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern( "yyyy/MM/dd HH:mm:ss" );
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println(dtf.format(now));
+    @GetMapping("/getTodaySaleGood/{page}")
+    public Result getTodaySaleGood(@PathVariable Integer page){
+        return Result.success(goodService.getTodaySaleGood(page));
+    }
 
-        return Result.success(true);
+    @GetMapping("/getTodaySaleGoodTotal")
+    public Result getTodaySaleGoodTotal(){
+        return Result.success(goodService.getTodaySaleGoodTotal());
     }
 
     /**

@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("Order")
+@RequestMapping("/orders")
 @CrossOrigin
 public class OrdersController {
 
@@ -24,13 +24,9 @@ public class OrdersController {
      * 返回一周内营收列表
      * @return
      */
-    @GetMapping
+    @GetMapping("getWeekIncome")
     public Result getWeekIncome(){
-        List<Integer> weekIncome = new ArrayList<>();
-        long now = new Date().getTime();
-
-
-        return Result.success(now);
+        return Result.success(ordersService.getWeekIncome());
     }
 
 }

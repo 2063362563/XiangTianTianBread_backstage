@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -26,12 +31,26 @@ class XiangtiantianBreadApplicationTests {
     //解析
     @Test
     public void test1() {
-        System.out.println(goodService.getTodaySaleGood());
+
+    }
+
+    @Test
+    public void test2() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd");
+        String datalist = "";
+        for (int i = 6; i >= 0; i--) {
+            LocalDate date = today.minusDays(i);
+            String formattedDate = date.format(formatter);
+            datalist = datalist.concat(formattedDate + ',');
+        }
+        datalist = datalist.substring(0, datalist.length() - 1);
+        System.out.println(datalist);
     }
 
 }
 
-
+//datalist = datalist+','+formattedDate;
 
 
 
