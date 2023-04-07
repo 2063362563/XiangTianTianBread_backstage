@@ -1,0 +1,19 @@
+server:
+  port: 8095
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/xiangtiantianbread
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  devtools:
+    restart:
+#      热部署生效
+      enabled: true
+#      设置重启目录
+      additional-paths: src/main/java
+#      设置该目录下内容修改不重启
+      exclude: static/**
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
