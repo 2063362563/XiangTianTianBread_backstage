@@ -1,14 +1,13 @@
 package com.fan.xiangtiantianbread.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.fan.xiangtiantianbread.pojo.Consumer;
-import com.fan.xiangtiantianbread.pojo.Orders;
-import com.fan.xiangtiantianbread.pojo.OrdersGood;
-import com.fan.xiangtiantianbread.pojo.PayRequest;
+import com.fan.xiangtiantianbread.pojo.*;
 import com.fan.xiangtiantianbread.service.ConsumerService;
+import com.fan.xiangtiantianbread.service.GoodService;
 import com.fan.xiangtiantianbread.service.OrdersGoodService;
 import com.fan.xiangtiantianbread.service.OrdersService;
 import com.fan.xiangtiantianbread.utils.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/common")
 @CrossOrigin
+@Slf4j
 public class CommonController {
 
     @Autowired
@@ -32,6 +32,9 @@ public class CommonController {
 
     @Autowired
     private OrdersService ordersService;
+
+    @Autowired
+    private GoodService goodService;
 
     @Transactional
     public BigDecimal basePay(List<Map<String, Object>> cart, Integer consumerId) {
@@ -50,6 +53,12 @@ public class CommonController {
             Integer goodId = (Integer) item.get("goodId");
             Integer price = (Integer) item.get("price");
             Integer num = (Integer) item.get("num");
+            //减库存
+            Good good = goodService.getById(goodId);
+            log.info(good.getInventory().toString());
+            good.setInventory(good.getInventory() - num);
+            log.info(good.getInventory().toString());
+            goodService.saveOrUpdate(good);
             //新建关系表
             OrdersGood ordersGood = new OrdersGood();
             ordersGood.setOrderId(uuid);

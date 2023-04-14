@@ -34,6 +34,11 @@ public class Good implements Serializable {
     private String type;
 
     /**
+     * 商品库存
+     */
+    private Integer inventory;
+
+    /**
      * 商品描述
      */
     private String description;

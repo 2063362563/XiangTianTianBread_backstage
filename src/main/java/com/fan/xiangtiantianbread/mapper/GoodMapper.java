@@ -23,7 +23,7 @@ public interface GoodMapper extends BaseMapper<Good> {
             "limit ${(page-1)*8},8")
     List<Map<String, Object>> getTodaySaleGood(Integer page);
 
-    @Select("SELECT COUNT(good_id) as total from orders_good where order_id in (select id from orders where date > CURRENT_DATE)")
+    @Select("SELECT COUNT(DISTINCT good_id) as total from orders_good where order_id in (select id from orders where date > CURRENT_DATE)")
     Integer getTodaySaleGoodTotal();
 
     @Select("SELECT count(id) as total from good WHERE type = '面包'")

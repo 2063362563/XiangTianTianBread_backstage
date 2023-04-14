@@ -1,5 +1,7 @@
 package com.fan.xiangtiantianbread;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.fan.xiangtiantianbread.pojo.Good;
 import com.fan.xiangtiantianbread.service.EmployeeService;
 import com.fan.xiangtiantianbread.service.GoodService;
 import com.fan.xiangtiantianbread.service.OrdersService;
@@ -9,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -37,12 +38,8 @@ class XiangtiantianBreadApplicationTests {
     public void test1() {
 
 
-        String input = "012";
-        List<String> result = new ArrayList<>();
-        generateCombinations(input, "", result);
-        for (String s : result) {
-            System.out.println(s);
-        }
+        LambdaQueryWrapper<Good> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Good::getIsDiscount, 1);
 
 
     }

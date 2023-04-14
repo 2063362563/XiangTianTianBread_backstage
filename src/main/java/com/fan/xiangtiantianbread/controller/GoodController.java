@@ -4,6 +4,7 @@ import cn.hutool.core.io.resource.InputStreamResource;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fan.xiangtiantianbread.mapper.GoodMapper;
 import com.fan.xiangtiantianbread.pojo.Good;
 import com.fan.xiangtiantianbread.service.GoodService;
@@ -57,6 +58,48 @@ public class GoodController {
         wrapper.eq(Good::getType, type);
         List<Good> goodList = goodService.getGoodIPage(current, wrapper).getRecords();
         return Result.success(goodList);
+    }
+
+
+    /**
+     * 获取折扣商品
+     *
+     * @param current
+     * @return
+     */
+    @GetMapping("/getDiscountGoodList/{current}")
+    public Result getDiscountGoodList(@PathVariable Integer current) {
+        LambdaQueryWrapper<Good> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Good::getIsDiscount, 1);
+        Page<Good> goodPage = new Page<>(current, 5);
+        Page<Good> page = goodService.page(goodPage, wrapper);
+        List<Good> goodList = page.getRecords();
+        Long total = page.getTotal();
+        Map<String, Object> map = new HashMap<>();
+        map.put("total", total);
+        map.put("goodList", goodList);
+        return Result.success(map);
+    }
+
+
+    /**
+     * 获取新品商品
+     *
+     * @param current
+     * @return
+     */
+    @GetMapping("/getNewGoodList/{current}")
+    public Result getNewGoodList(@PathVariable Integer current) {
+        LambdaQueryWrapper<Good> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Good::getIsNew, 1);
+        Page<Good> goodPage = new Page<>(current, 5);
+        Page<Good> page = goodService.page(goodPage, wrapper);
+        List<Good> goodList = page.getRecords();
+        Long total = page.getTotal();
+        Map<String, Object> map = new HashMap<>();
+        map.put("total", total);
+        map.put("goodList", goodList);
+        return Result.success(map);
     }
 
     @GetMapping("/getBreadTotal")
